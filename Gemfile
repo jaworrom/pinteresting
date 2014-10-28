@@ -12,7 +12,7 @@ gem 'bootstrap-sass'
 gem 'devise', '~> 3.4.0'
 gem 'paperclip', github: 'thoughtbot/paperclip'
 gem 'aws-sdk', '~> 1.20.0'
-gem 'masonry-rails', '~> 0.2.0'
+gem 'masonry-rails'
 
 
 gem 'sdoc', '~> 0.4.0',          group: :doc
