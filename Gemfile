@@ -13,6 +13,8 @@ gem 'devise', '~> 3.4.0'
 gem 'paperclip', github: 'thoughtbot/paperclip'
 gem 'aws-sdk', '~> 1.20.0'
 gem 'masonry-rails'
+gem 'will_paginate', '~> 3.0.5'
+gem 'will_paginate-bootstrap'
 
 
 gem 'sdoc', '~> 0.4.0',          group: :doc
