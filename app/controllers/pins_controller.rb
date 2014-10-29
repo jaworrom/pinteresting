@@ -1,22 +1,20 @@
 class PinsController < ApplicationController
-  respond_to :html, :xml, :json
-  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_pin, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
-  
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @pins = Pin.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 8)
-    respond_with(@pins)
+    @pins = Pin.all.order("created_at DESC").paginate(:page => params[:page], :per_page =>10)
+   
   end
 
   def show
-    respond_with(@pin)
+    
   end
 
   def new
     @pin = Pin.new
-    respond_with(@pin)
+    
   end
 
   def edit
@@ -24,28 +22,34 @@ class PinsController < ApplicationController
 
   def create
     @pin = current_user.pins.build(pin_params)
-    @pin.save
-    respond_with(@pin)
+    if @pin.save
+      redirect_to @pin, notice: 'Awesome, the pin was successfully created!'
+    else
+      render action: 'new'
+    end
   end
 
   def update
-    @pin.update(pin_params)
-    respond_with(@pin)
+    if @pin.update(pin_params)
+      redirect_to @pin, notice: 'Cool, you updated the pin!'
+    else
+      render action: 'edit'
+    end
   end
 
   def destroy
     @pin.destroy
-    respond_with(@pin)
+    redirect_to pins_url, notice: 'Pin was successfully deleted!'
   end
 
   private
     def set_pin
       @pin = Pin.find(params[:id])
     end
-  
+
     def correct_user
       @pin = current_user.pins.find_by(id: params[:id])
-      redirect_to pins_path, notice: "Not authorized to edit this pin" if @pin.nil?
+      redirect_to pins_path, notice: "You can't edit this pin, it's not yours!" if @pin.nil?
     end
 
     def pin_params
