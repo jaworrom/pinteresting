@@ -4,4 +4,6 @@ class Pin < ActiveRecord::Base
   validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
   validates :description, presence: true
   validates :user_id, presence: true
+  validates :image, presence: true
+  validates :email, uniqueness: true
 end
